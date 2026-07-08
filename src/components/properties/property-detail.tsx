@@ -246,20 +246,21 @@ export function PropertyDetail({ property, related, companyName, tel = "0558-64-
               </div>
 
               {images.length > 1 && (
-                <div className="mt-3 grid grid-cols-5 gap-2 sm:grid-cols-8">
+                <div className="mt-3 flex gap-2 overflow-x-auto pb-1 sm:grid sm:grid-cols-8 sm:overflow-x-visible sm:pb-0 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                   {images.slice(0, 16).map((img, i) => (
                     <button
                       key={i}
                       type="button"
                       onClick={() => setCurrentImg(i)}
                       className={cn(
-                        "relative aspect-square overflow-hidden rounded-[4px] transition-opacity duration-300",
+                        "relative aspect-square shrink-0 overflow-hidden rounded-[4px] transition-opacity duration-300",
+                        "w-[13vw] sm:w-auto",
                         i === currentImg
                           ? "opacity-100 ring-1 ring-black"
                           : "opacity-55 hover:opacity-100",
                       )}
                     >
-                      <Image src={img.image_url} alt="" fill className="object-cover" sizes="10vw" />
+                      <Image src={img.image_url} alt="" fill className="object-cover" sizes="13vw" />
                     </button>
                   ))}
                 </div>
