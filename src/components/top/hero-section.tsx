@@ -105,22 +105,35 @@ export function HeroSection({ latestProperty }: Props) {
           </div>
         </div>
 
-        {/* SP のみ — デザイン用 左壁半埋め縦書き */}
+        {/* SP のみ — デザイン用 左上はみ出し2行 */}
         <div
-          className="absolute left-0 top-0 z-10 flex items-start lg:hidden"
-          style={{ pointerEvents: "none", transform: "translateX(-42%)", paddingTop: "6vh" }}
+          className="absolute left-0 top-0 z-10 lg:hidden"
+          style={{
+            pointerEvents: "none",
+            transform: "translate(-6%, -4%)",
+            lineHeight: 0.88,
+          }}
         >
-          <span
-            className="text-white/35"
+          <div
+            className="text-white"
             style={{
-              writingMode: "vertical-rl",
               fontFamily: "var(--font-display)",
-              fontSize: "clamp(120px, 38vw, 180px)",
-              letterSpacing: "0.04em",
+              fontSize: "clamp(88px, 28vw, 140px)",
+              letterSpacing: "0.02em",
             }}
           >
-            LIVE NATURALLY.
-          </span>
+            LIVE
+          </div>
+          <div
+            className="text-white"
+            style={{
+              fontFamily: "var(--font-display)",
+              fontSize: "clamp(88px, 28vw, 140px)",
+              letterSpacing: "0.02em",
+            }}
+          >
+            NATURALLY.
+          </div>
         </div>
 
         {/* 右下: 新着物件カード */}
