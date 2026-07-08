@@ -105,19 +105,18 @@ export function HeroSection({ latestProperty }: Props) {
           </div>
         </div>
 
-        {/* SP のみ — 左壁に半埋め縦書き */}
+        {/* SP のみ — デザイン用 左壁半埋め縦書き */}
         <div
-          className="absolute bottom-0 left-0 top-0 z-10 flex items-center lg:hidden"
-          style={{ pointerEvents: "none", transform: "translateX(-42%)" }}
+          className="absolute left-0 top-0 z-10 flex items-start lg:hidden"
+          style={{ pointerEvents: "none", transform: "translateX(-42%)", paddingTop: "6vh" }}
         >
           <span
-            className="text-white/90"
+            className="text-white/35"
             style={{
               writingMode: "vertical-rl",
               fontFamily: "var(--font-display)",
-              fontSize: "clamp(96px, 30vw, 140px)",
-              letterSpacing: "0.05em",
-              textShadow: "0 2px 24px rgba(0,0,0,0.3)",
+              fontSize: "clamp(120px, 38vw, 180px)",
+              letterSpacing: "0.04em",
             }}
           >
             LIVE NATURALLY.
