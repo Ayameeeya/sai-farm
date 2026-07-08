@@ -91,7 +91,7 @@ export function PropertyCard({ property, index, variant = "default" }: Props) {
             <FavoriteButton id={property.id} className="absolute top-4 right-4" />
             {number && (
               <span
-                className="absolute bottom-4 left-4 text-[15px] font-semibold tabular-nums tracking-[0.1em] text-white mix-blend-difference"
+                className="absolute bottom-4 left-4 hidden text-[15px] font-semibold tabular-nums tracking-[0.1em] text-white mix-blend-difference lg:block"
                 style={{ fontFamily: "var(--font-barlow)" }}
               >
                 {number}
