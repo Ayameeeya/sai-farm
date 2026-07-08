@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useRef } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import dynamic from "next/dynamic"
@@ -58,7 +58,7 @@ const DETAIL_ROWS = [
 ]
 
 const SLIDER_BTN =
-  "absolute top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/40 bg-black/20 text-white backdrop-blur-md transition-colors duration-300 hover:bg-black/40"
+  "absolute top-1/2 hidden -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-white/8 text-white backdrop-blur-sm transition-all duration-300 hover:bg-white/20 lg:flex h-10 w-10"
 
 type Props = {
   property: Property
@@ -75,9 +75,20 @@ export function PropertyDetail({ property, related, companyName, tel = "0558-64-
     (a, b) => a.sort_order - b.sort_order,
   )
   const [currentImg, setCurrentImg] = useState(0)
+  const touchStartX = useRef<number | null>(null)
 
   const prev = () => setCurrentImg((i) => (i === 0 ? images.length - 1 : i - 1))
   const next = () => setCurrentImg((i) => (i === images.length - 1 ? 0 : i + 1))
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX
+  }
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return
+    const delta = e.changedTouches[0].clientX - touchStartX.current
+    if (Math.abs(delta) > 40) delta < 0 ? next() : prev()
+    touchStartX.current = null
+  }
 
   const tags = (property as Property & { property_tags?: { tag?: { name: string } }[] }).property_tags?.map((pt) => pt.tag?.name).filter(Boolean) ?? []
   const category = (property as Property & { property_category?: { name: string; slug: string } }).property_category
@@ -183,7 +194,11 @@ export function PropertyDetail({ property, related, companyName, tel = "0558-64-
           <div className="space-y-12 lg:col-span-2">
             {/* ギャラリー */}
             <div>
-              <div className="group relative aspect-[16/10] overflow-hidden rounded-[6px] bg-black/5">
+              <div
+                className="group relative aspect-[16/10] overflow-hidden rounded-[6px] bg-black/5"
+                onTouchStart={images.length > 1 ? handleTouchStart : undefined}
+                onTouchEnd={images.length > 1 ? handleTouchEnd : undefined}
+              >
                 {images.length > 0 ? (
                   <>
                     <Image
@@ -202,17 +217,6 @@ export function PropertyDetail({ property, related, companyName, tel = "0558-64-
                         <button type="button" onClick={next} className={cn(SLIDER_BTN, "right-4")} aria-label="次の画像">
                           <ChevronRight size={18} />
                         </button>
-                        <div
-                          className="absolute bottom-4 left-4 flex items-baseline gap-1.5 text-white mix-blend-difference"
-                          style={{ fontFamily: "var(--font-barlow)" }}
-                        >
-                          <span className="text-[15px] font-semibold tabular-nums tracking-[0.1em]">
-                            {String(currentImg + 1).padStart(2, "0")}
-                          </span>
-                          <span className="text-[11px] opacity-60 tabular-nums tracking-[0.1em]">
-                            / {String(images.length).padStart(2, "0")}
-                          </span>
-                        </div>
                       </>
                     )}
                   </>

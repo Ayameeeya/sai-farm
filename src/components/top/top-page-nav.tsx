@@ -92,12 +92,12 @@ export function TopPageNav() {
           style={{ opacity: topOpacity }}
         >
           {/* 左 */}
-          <div className="flex-1 flex items-center gap-2">
-            <span className="text-[10px] tracking-[0.25em] text-black/40 uppercase font-medium">
+          <div className="flex-1 flex items-center gap-1.5">
+            <span className="text-[7.5px] tracking-[0.18em] text-black/40 uppercase font-medium lg:text-[10px] lg:tracking-[0.25em]">
               Minami-Izu
             </span>
-            <span className="text-black/20 text-[10px]">|</span>
-            <span className="text-[10px] tracking-[0.25em] text-black/40 uppercase font-medium">
+            <span className="text-black/20 text-[7.5px] lg:text-[10px]">|</span>
+            <span className="text-[7.5px] tracking-[0.18em] text-black/40 uppercase font-medium lg:text-[10px] lg:tracking-[0.25em]">
               Real Estate
             </span>
           </div>
