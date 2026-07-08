@@ -83,7 +83,7 @@ export function PropertyCard({ property, index, variant = "default" }: Props) {
                 No Image
               </div>
             )}
-            {isSold && <div className="pointer-events-none absolute inset-0 bg-black/45" />}
+            {isSold && <div className="pointer-events-none absolute inset-0 bg-black/65" />}
             <PropertyStatusBadge
               status={property.status}
               className="absolute top-4 left-4"
@@ -176,7 +176,7 @@ export function PropertyCard({ property, index, variant = "default" }: Props) {
             No Image
           </div>
         )}
-        {isSold && <div className="pointer-events-none absolute inset-0 bg-black/45" />}
+        {isSold && <div className="pointer-events-none absolute inset-0 bg-black/65" />}
         <PropertyStatusBadge
           status={property.status}
           className="absolute top-3 left-3"
