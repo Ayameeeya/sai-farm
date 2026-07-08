@@ -107,10 +107,10 @@ export function HeroSection({ latestProperty }: Props) {
 
         {/* SP のみ — デザイン用 左上はみ出し2行 */}
         <div
-          className="absolute left-0 top-1/2 z-10 lg:hidden"
+          className="absolute left-0 top-[42%] z-10 lg:hidden"
           style={{
             pointerEvents: "none",
-            transform: "translate(-6%, 0%)",
+            transform: "translate(-6%, -50%)",
             lineHeight: 0.88,
           }}
         >
