@@ -105,22 +105,23 @@ export function HeroSection({ latestProperty }: Props) {
           </div>
         </div>
 
-        {/* SP のみ — 左壁に半埋め縦書き・背景の反対色 */}
+        {/* SP のみ — 横書き大見出し・右へはみ出すエディトリアル風 */}
         <div
-          className="absolute bottom-0 left-0 top-0 z-10 flex items-center mix-blend-difference lg:hidden"
-          style={{ pointerEvents: "none", transform: "translateX(-42%)" }}
+          className="absolute bottom-5 left-0 z-10 lg:hidden"
+          style={{ pointerEvents: "none" }}
         >
-          <span
-            className="text-white"
+          <p
+            className="whitespace-nowrap pl-4 text-white/90 leading-[0.85] mix-blend-difference"
             style={{
-              writingMode: "vertical-rl",
               fontFamily: "var(--font-display)",
-              fontSize: "clamp(120px, 38vw, 170px)",
-              letterSpacing: "0.05em",
+              fontSize: "24vw",
+              letterSpacing: "0.01em",
             }}
           >
-            LIVE NATURALLY.
-          </span>
+            LIVE
+            <br />
+            NATURALLY.
+          </p>
         </div>
 
         {/* 右下: 新着物件カード */}
@@ -129,11 +130,11 @@ export function HeroSection({ latestProperty }: Props) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.2, duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className="absolute bottom-10 right-5 lg:bottom-12 lg:right-10 z-10 w-[220px] lg:w-[250px]"
+            className="absolute bottom-[130px] right-5 lg:bottom-12 lg:right-10 z-10 w-[180px] lg:w-[250px]"
           >
             <Link href={`/properties/${latestProperty.slug}/`} className="block group">
               <div
-                className="rounded-2xl overflow-hidden"
+                className="rounded-[12px] overflow-hidden"
                 style={{
                   backdropFilter: "blur(4px)",
                   WebkitBackdropFilter: "blur(4px)",
@@ -144,8 +145,7 @@ export function HeroSection({ latestProperty }: Props) {
               >
                 {/* サムネイル — 60%、下角丸のみ */}
                 <div
-                  className="relative w-full overflow-hidden"
-                  style={{ height: 150, borderBottomLeftRadius: "12px", borderBottomRightRadius: "12px" }}
+                  className="relative h-[110px] w-full overflow-hidden rounded-b-[12px] lg:h-[150px] lg:rounded-b-[12px]"
                 >
                   {thumbUrl ? (
                     <Image
@@ -161,7 +161,7 @@ export function HeroSection({ latestProperty }: Props) {
                 </div>
 
                 {/* テキストエリア — 40% */}
-                <div className="px-4 py-1.5 pb-2 flex flex-col justify-between" style={{ minHeight: 100 }}>
+                <div className="flex min-h-[78px] flex-col justify-between px-4 py-1.5 pb-2 lg:min-h-[100px]">
                   {/* ラベル: 上端（画像のすぐ下） */}
                   <p
                     className="text-white/55 text-[9px] tracking-[0.32em] uppercase font-semibold"
@@ -173,10 +173,9 @@ export function HeroSection({ latestProperty }: Props) {
                   {/* タイトル + アイコン: 下端 */}
                   <div>
                     <p
-                      className="text-white font-bold leading-snug line-clamp-3 mb-1"
+                      className="text-white font-bold leading-snug line-clamp-2 lg:line-clamp-3 mb-1 text-[15px] lg:text-[18px]"
                       style={{
                         fontFamily: "var(--font-barlow)",
-                        fontSize: "18px",
                         letterSpacing: "-0.01em",
                       }}
                     >
