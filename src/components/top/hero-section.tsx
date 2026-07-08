@@ -114,9 +114,8 @@ export function HeroSection({ latestProperty }: Props) {
             className="text-white/90"
             style={{
               writingMode: "vertical-rl",
-              transform: "rotate(180deg)",
               fontFamily: "var(--font-display)",
-              fontSize: "clamp(54px, 16vw, 88px)",
+              fontSize: "clamp(72px, 22vw, 120px)",
               letterSpacing: "0.05em",
               textShadow: "0 2px 24px rgba(0,0,0,0.3)",
             }}
