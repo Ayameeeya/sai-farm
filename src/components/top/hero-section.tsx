@@ -105,38 +105,22 @@ export function HeroSection({ latestProperty }: Props) {
           </div>
         </div>
 
-        {/* SP のみ — デザイン用 左上はみ出し2行（塗り×アウトラインのミックス） */}
+        {/* SP のみ — 左壁に半埋め縦書き・背景の反対色 */}
         <div
-          className="absolute left-0 top-0 z-10 lg:hidden"
-          style={{
-            pointerEvents: "none",
-            transform: "translate(-5%, -6%)",
-            lineHeight: 0.84,
-          }}
+          className="absolute bottom-0 left-0 top-0 z-10 flex items-center mix-blend-difference lg:hidden"
+          style={{ pointerEvents: "none", transform: "translateX(-42%)" }}
         >
-          {/* difference で背景色を反転 */}
-          <div
-            className="font-black text-white"
+          <span
+            className="text-white"
             style={{
+              writingMode: "vertical-rl",
               fontFamily: "var(--font-display)",
-              fontSize: "clamp(96px, 32vw, 150px)",
-              letterSpacing: "0.01em",
-              mixBlendMode: "difference",
+              fontSize: "clamp(120px, 38vw, 170px)",
+              letterSpacing: "0.05em",
             }}
           >
-            LIVE
-          </div>
-          <div
-            className="font-black text-white"
-            style={{
-              fontFamily: "var(--font-display)",
-              fontSize: "clamp(96px, 32vw, 150px)",
-              letterSpacing: "0.01em",
-              mixBlendMode: "difference",
-            }}
-          >
-            NATURALLY.
-          </div>
+            LIVE NATURALLY.
+          </span>
         </div>
 
         {/* 右下: 新着物件カード */}
