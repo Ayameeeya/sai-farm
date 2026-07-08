@@ -64,7 +64,7 @@ export function CategoryBox({
 
 export function DraggableContainer({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex gap-2 overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+    <div className="flex touch-pan-x gap-2 overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
       {children}
     </div>
   )

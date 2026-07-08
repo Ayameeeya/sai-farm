@@ -1,11 +1,22 @@
 "use client"
 
 import { useMemo, useState } from "react"
+import dynamic from "next/dynamic"
 import { useRouter } from "next/navigation"
 import Image from "next/image"
 import { Trash2, Pencil, X } from "lucide-react"
 import { saveFacility, deleteFacility, type FacilityInput } from "@/app/admin/actions"
 import { ImageUploadField } from "@/components/admin/image-upload-field"
+
+const CoordinatePicker = dynamic(
+  () => import("@/components/admin/coordinate-picker").then((m) => m.CoordinatePicker),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="h-[320px] animate-pulse rounded-[8px] bg-black/[0.04]" />
+    ),
+  },
+)
 
 type Option = { id: string; name: string }
 
@@ -178,6 +189,19 @@ export function FacilitiesManager({
                 </option>
               ))}
             </select>
+          </div>
+          <div className="lg:col-span-2">
+            <label className={LABEL}>位置 *</label>
+            <div className="mt-1.5">
+              <CoordinatePicker
+                lat={form.lat === "" || Number.isNaN(Number(form.lat)) ? null : Number(form.lat)}
+                lng={form.lng === "" || Number.isNaN(Number(form.lng)) ? null : Number(form.lng)}
+                onChange={(lat, lng) =>
+                  setForm((prev) => ({ ...prev, lat: String(lat), lng: String(lng) }))
+                }
+                showAddressSearch
+              />
+            </div>
           </div>
           <div>
             <label className={LABEL}>緯度 *</label>

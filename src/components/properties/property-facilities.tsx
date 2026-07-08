@@ -5,11 +5,13 @@ import Image from "next/image"
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet"
 import type { Map as LeafletMap } from "leaflet"
 import "leaflet/dist/leaflet.css"
+import "@/styles/map.css"
 import { MapPin } from "lucide-react"
 import { MapInstanceCapture } from "@/components/map/map-instance-capture"
-import { RedIcon } from "@/components/map/icons/red-icon"
-import { BlueIcon } from "@/components/map/icons/blue-icon"
-import { SCROLL_PAGE_PT, STICKY_TOP } from "@/components/top/top-page-nav"
+import { createLocationPin } from "@/components/map/icons/location-pin"
+import { getIconByCategory } from "@/components/map/icons/get-icon-by-category"
+import { MarkerFacilityCard } from "@/components/map/marker-facility-card"
+import { STICKY_TOP } from "@/components/top/top-page-nav"
 
 export type PropertyFacility = {
   id: string
@@ -18,7 +20,7 @@ export type PropertyFacility = {
   image_url: string | null
   lat: number
   lng: number
-  facility_type?: { name: string } | null
+  facility_type?: { name: string; slug: string } | null
 }
 
 type Props = {
@@ -82,13 +84,32 @@ export function PropertyFacilities({
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
           {hasLocation && (
-            <Marker position={[propertyLat, propertyLng]} icon={RedIcon!}>
-              <Popup>{propertyName}</Popup>
-            </Marker>
+            <Marker
+              position={[propertyLat, propertyLng]}
+              icon={createLocationPin({ selected: true })}
+              zIndexOffset={1000}
+              interactive={false}
+            />
           )}
           {facilities.map((f) => (
-            <Marker key={f.id} position={[f.lat, f.lng]} icon={BlueIcon!}>
-              <Popup>{f.name}</Popup>
+            <Marker
+              key={f.id}
+              position={[f.lat, f.lng]}
+              icon={getIconByCategory(f.facility_type?.slug ?? "default")}
+            >
+              <Popup>
+                <MarkerFacilityCard
+                  facility={{
+                    id: f.id,
+                    name: f.name,
+                    lat: f.lat,
+                    lng: f.lng,
+                    imageUrl: f.image_url,
+                    description: f.description,
+                    facilityTypeSlug: f.facility_type?.slug ?? "default",
+                  }}
+                />
+              </Popup>
             </Marker>
           ))}
         </MapContainer>

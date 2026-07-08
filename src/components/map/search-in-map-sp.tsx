@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react"
 import { MapContainer, Marker, TileLayer } from "react-leaflet"
+import { AnimatePresence } from "framer-motion"
 import { useForm } from "react-hook-form"
 import { normalize } from "@geolonia/normalize-japanese-addresses"
 import { Search } from "lucide-react"
@@ -102,7 +103,7 @@ export function SearchInMapSp({ data }: { data: MapData }) {
           <Marker
             key={facility.id}
             position={[facility.lat, facility.lng]}
-            icon={getIconByCategory(facility.facilityTypeSlug)!}
+            icon={getIconByCategory(facility.facilityTypeSlug)}
             eventHandlers={{
               click: () => {
                 setSelectedPlace({ kind: "facility", ...facility })
@@ -152,8 +153,22 @@ export function SearchInMapSp({ data }: { data: MapData }) {
 
       {map && <CurrentLocationButton map={map} />}
 
-      {selectedPlace?.kind === "property" && <PropertyDetailSheet property={selectedPlace} />}
-      {selectedPlace?.kind === "facility" && <FacilityDetailSheet facility={selectedPlace} />}
+      <AnimatePresence>
+        {selectedPlace?.kind === "property" && (
+          <PropertyDetailSheet
+            key={`property-${selectedPlace.id}`}
+            property={selectedPlace}
+            onClose={() => setSelectedPlace(null)}
+          />
+        )}
+        {selectedPlace?.kind === "facility" && (
+          <FacilityDetailSheet
+            key={`facility-${selectedPlace.id}`}
+            facility={selectedPlace}
+            onClose={() => setSelectedPlace(null)}
+          />
+        )}
+      </AnimatePresence>
     </div>
   )
 }

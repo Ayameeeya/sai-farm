@@ -67,7 +67,7 @@ export function SearchInMapDesktop({ data }: { data: MapData }) {
           <Marker
             key={facility.id}
             position={[facility.lat, facility.lng]}
-            icon={getIconByCategory(facility.facilityTypeSlug)!}
+            icon={getIconByCategory(facility.facilityTypeSlug)}
             eventHandlers={{
               click: () => map?.setView([facility.lat, facility.lng], ZOOM),
             }}

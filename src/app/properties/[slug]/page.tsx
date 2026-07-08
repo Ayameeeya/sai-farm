@@ -59,7 +59,7 @@ export default async function PropertyDetailPage({ params }: Props) {
       property_images(image_url, sort_order),
       area:areas(name, slug),
       property_category:property_categories(name, slug),
-      property_facilities(facility:facilities(id, name, description, image_url, lat, lng, facility_type:facility_types(name))),
+      property_facilities(facility:facilities(id, name, description, image_url, lat, lng, facility_type:facility_types(name, slug))),
       property_tags(tag:tags(name))
     `)
     .eq("slug", slug)

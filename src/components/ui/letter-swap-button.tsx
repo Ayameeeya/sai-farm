@@ -112,7 +112,7 @@ export function LetterSwapButton({
       onMouseEnter={hoverStart}
       onMouseLeave={hoverEnd}
       className={cn(
-        "inline-flex items-center justify-center rounded-[6px] gap-2.5 pl-6 pr-5 py-2.5 text-[13px] font-medium tracking-[0.12em] transition-colors duration-300",
+        "inline-flex items-center justify-center rounded-[6px] gap-3 pl-2.5 pr-2.5 py-2.5 text-[13px] font-medium tracking-[0.12em] transition-colors duration-300",
         variant === "dark"
           ? "bg-black text-white hover:bg-black/90"
           : "bg-white text-black hover:bg-white/90",
@@ -155,7 +155,7 @@ export function LetterSwapSubmitButton({
       onMouseEnter={hoverStart}
       onMouseLeave={hoverEnd}
       className={cn(
-        "inline-flex items-center justify-center rounded-[6px] gap-2.5 pl-6 pr-5 py-2.5 text-[13px] font-medium tracking-[0.12em] transition-colors duration-300 bg-black text-white hover:bg-black/90 disabled:opacity-50",
+        "inline-flex items-center justify-center rounded-[6px] gap-3 pl-2.5 pr-2.5 py-2.5 text-[13px] font-medium tracking-[0.12em] transition-colors duration-300 bg-black text-white hover:bg-black/90 disabled:opacity-50",
         className,
       )}
     >

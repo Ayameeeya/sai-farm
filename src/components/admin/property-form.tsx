@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import dynamic from "next/dynamic"
 import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import {
@@ -17,6 +18,16 @@ import {
   type PropertyInput,
 } from "@/app/admin/actions"
 import { ImageUploadField } from "@/components/admin/image-upload-field"
+
+const CoordinatePicker = dynamic(
+  () => import("@/components/admin/coordinate-picker").then((m) => m.CoordinatePicker),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="h-[320px] animate-pulse rounded-[8px] bg-black/[0.04]" />
+    ),
+  },
+)
 
 type Option = { id: string; name: string }
 type FacilityOption = { id: string; name: string; typeName: string | null }
@@ -46,6 +57,9 @@ const INPUT_DISABLED = `${INPUT} disabled:cursor-not-allowed disabled:border-bla
 
 const cnLabel = (disabled: boolean) =>
   disabled ? `${LABEL} text-black/25` : LABEL
+
+const numOrNull = (v: unknown) =>
+  v === "" || v == null || Number.isNaN(Number(v)) ? null : Number(v)
 
 type FormData = Omit<PropertyInput, "images" | "tag_ids" | "facility_ids">
 
@@ -102,9 +116,6 @@ export function PropertyForm({
 
   const onSubmit = async (values: FormData) => {
     setError(null)
-    const numOrNull = (v: unknown) =>
-      v === "" || v == null || Number.isNaN(Number(v)) ? null : Number(v)
-
     const result = await saveProperty(propertyId, {
       ...values,
       status: Number(values.status),
@@ -319,8 +330,19 @@ export function PropertyForm({
 
       {/* 位置情報 */}
       <section className="rounded-[12px] bg-white p-6 ring-1 ring-black/5">
-        <p className="mb-5 text-[13px] font-medium text-black/70">位置情報（地図表示用）</p>
-        <div className="grid gap-4 lg:grid-cols-2">
+        <p className="mb-1.5 text-[13px] font-medium text-black/70">位置情報（地図表示用）</p>
+        <p className="mb-5 text-[11.5px] text-black/45">
+          住所欄の「座標を取得」でピンを立てて、ドラッグで正確な位置に調整してください。
+        </p>
+        <CoordinatePicker
+          lat={numOrNull(watch("lat"))}
+          lng={numOrNull(watch("lng"))}
+          onChange={(lat, lng) => {
+            setValue("lat", lat, { shouldDirty: true })
+            setValue("lng", lng, { shouldDirty: true })
+          }}
+        />
+        <div className="mt-4 grid gap-4 lg:grid-cols-2">
           <div>
             <label className={LABEL}>緯度</label>
             <input type="number" step="any" className={INPUT} {...register("lat")} />

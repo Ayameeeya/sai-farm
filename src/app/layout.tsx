@@ -47,7 +47,7 @@ const barlow = Barlow({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    template: "%s | サイファーム南伊豆",
+    template: "サイファーム南伊豆 | %s",
     default: "サイファーム南伊豆 | 伊豆の不動産・移住・別荘",
   },
   description: "静岡県伊豆・南伊豆エリアの不動産情報。土地・戸建・別荘の売買、移住相談はサイファーム南伊豆へ。",
@@ -64,6 +64,7 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
+      { url: "/favicon.ico" },
       { url: "/favicon-32x32.png", sizes: "32x32" },
       { url: "/icon-512.png", sizes: "512x512" },
     ],

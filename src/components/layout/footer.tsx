@@ -145,7 +145,7 @@ export function Footer() {
       <div className="bg-white">
         <div
           className="relative overflow-hidden rounded-t-[16px]"
-          style={{ height: "clamp(900px, 145vh, 1500px)" }}
+          style={{ height: "clamp(700px, 100vh, 1150px)" }}
         >
           <Image
             src={CTA_IMAGE}
@@ -157,7 +157,7 @@ export function Footer() {
           <div className="absolute inset-0 bg-black/55" />
           <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-transparent to-transparent" />
 
-          <div className="relative z-10 h-full flex flex-col items-center text-center px-6 pt-[7vh] lg:pt-[9vh]">
+          <div className="relative z-10 h-full flex flex-col items-center text-center px-6 pt-3 lg:pt-5">
             <h2
               ref={ctaHeadingRef}
               aria-label="南伊豆で、暮らしを探す。"
@@ -175,7 +175,7 @@ export function Footer() {
               ))}
             </h2>
 
-            <p className="mt-[13vh] lg:mt-[15vh] text-[13px] lg:text-[14px] leading-[2] text-white/90">
+            <p className="mt-[9vh] lg:mt-[11vh] text-[13px] lg:text-[14px] font-medium leading-[2] text-white/90">
               <span className="block whitespace-nowrap">移住も、別荘も、リゾートも。</span>
               <span className="block whitespace-nowrap">南伊豆での暮らしのはじまりを、</span>
               <span className="block whitespace-nowrap">地元の目線でお手伝いします。</span>

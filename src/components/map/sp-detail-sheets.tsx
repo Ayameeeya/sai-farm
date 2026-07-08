@@ -2,73 +2,97 @@
 
 import Image from "next/image"
 import { useRouter } from "next/navigation"
-import { motion, useMotionValue } from "framer-motion"
-import { X, Heart } from "lucide-react"
+import { motion, type PanInfo } from "framer-motion"
+import { Heart } from "lucide-react"
 import { useEffect, useState } from "react"
 import type { MapProperty, MapFacility } from "@/types/map"
 import { DraggableContainer } from "@/components/map/sp-map-ui"
+import { readFavorites, writeFavorites } from "@/components/map/favorites-modal"
+
+const SHEET_SPRING = { type: "spring" as const, damping: 34, stiffness: 380 }
+const CLOSE_OFFSET = 80
+const CLOSE_VELOCITY = 400
 
 function SheetGrip() {
   return (
-    <div className="absolute left-1/2 top-3 h-1 w-10 -translate-x-1/2 rounded-full bg-black/15" />
+    <div className="mx-auto mt-3 h-1 w-10 shrink-0 rounded-full bg-black/15" />
   )
 }
 
-export function PropertyDetailSheet({ property }: { property: MapProperty }) {
+function MapBottomSheet({
+  onClose,
+  children,
+}: {
+  onClose: () => void
+  children: React.ReactNode
+}) {
+  const handleDragEnd = (_event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
+    if (info.offset.y > CLOSE_OFFSET || info.velocity.y > CLOSE_VELOCITY) onClose()
+  }
+
+  return (
+    <>
+      <motion.button
+        type="button"
+        aria-label="閉じる"
+        className="fixed inset-0 z-[35] bg-black"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.32 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+        onClick={onClose}
+      />
+      <motion.div
+        role="dialog"
+        aria-modal="true"
+        className="fixed inset-x-0 bottom-0 z-[40] flex max-h-[78dvh] flex-col rounded-t-[16px] bg-white pb-[max(env(safe-area-inset-bottom),20px)] shadow-[0_-18px_60px_-18px_rgba(13,12,10,0.4)]"
+        initial={{ y: "100%" }}
+        animate={{ y: 0 }}
+        exit={{ y: "110%" }}
+        transition={SHEET_SPRING}
+        drag="y"
+        dragConstraints={{ top: 0, bottom: 0 }}
+        dragElastic={{ top: 0.04, bottom: 0.6 }}
+        onDragEnd={handleDragEnd}
+      >
+        <SheetGrip />
+        <div className="map-scrollbar relative flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto overscroll-contain px-5 pb-1 pt-4">
+          {children}
+        </div>
+      </motion.div>
+    </>
+  )
+}
+
+export function PropertyDetailSheet({
+  property,
+  onClose,
+}: {
+  property: MapProperty
+  onClose: () => void
+}) {
   const router = useRouter()
-  const y = useMotionValue(0)
-  const [onTop, setOnTop] = useState(false)
   const [isFavorited, setIsFavorited] = useState(false)
 
   useEffect(() => {
-    const json = localStorage.getItem("favorites")
-    if (json) {
-      const fav = JSON.parse(json) as { properties: string[] }
-      setIsFavorited(fav.properties.includes(property.id))
-    }
+    setIsFavorited(readFavorites().includes(property.id))
   }, [property.id])
 
-  useEffect(() => {
-    const unsubscribe = y.on("change", (latestY) => {
-      setOnTop(latestY === -780)
-    })
-    return unsubscribe
-  }, [y])
-
   const addFavorite = () => {
-    const json = localStorage.getItem("favorites")
-    const fav = json ? (JSON.parse(json) as { properties: string[] }) : { properties: [] as string[] }
-    if (!fav.properties.includes(property.id)) {
-      fav.properties.push(property.id)
-      localStorage.setItem("favorites", JSON.stringify(fav))
+    const ids = readFavorites()
+    if (!ids.includes(property.id)) {
+      writeFavorites([...ids, property.id])
       setIsFavorited(true)
     }
   }
 
   return (
-    <motion.div
-      drag={onTop ? false : "y"}
-      dragConstraints={{ bottom: -780, top: 0 }}
-      dragElastic={1}
-      style={{ y }}
-      className="absolute bottom-[-780px] z-[40] flex h-screen w-full flex-col gap-4 rounded-t-[16px] bg-white p-5 pt-9 shadow-[0_-18px_60px_-18px_rgba(13,12,10,0.4)]"
-    >
-      <SheetGrip />
-      {onTop && (
-        <button
-          type="button"
-          onClick={() => y.set(0)}
-          className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-black/[0.05] text-black/55"
-          aria-label="閉じる"
-        >
-          <X size={15} strokeWidth={1.5} />
-        </button>
-      )}
+    <MapBottomSheet onClose={onClose}>
       <button
         type="button"
         onClick={addFavorite}
         disabled={isFavorited}
-        className={`absolute right-5 top-9 ${isFavorited ? "text-[#b3543f]" : "text-black/40"}`}
+        className={`absolute right-5 top-4 z-10 ${isFavorited ? "text-[#b3543f]" : "text-black/40"}`}
         aria-label="お気に入りに追加"
       >
         <Heart size={22} strokeWidth={1.5} fill={isFavorited ? "currentColor" : "none"} />
@@ -108,40 +132,19 @@ export function PropertyDetailSheet({ property }: { property: MapProperty }) {
       >
         物件の詳細を見る
       </button>
-    </motion.div>
+    </MapBottomSheet>
   )
 }
 
-export function FacilityDetailSheet({ facility }: { facility: MapFacility }) {
-  const y = useMotionValue(0)
-  const [onTop, setOnTop] = useState(false)
-
-  useEffect(() => {
-    const unsubscribe = y.on("change", (latestY) => {
-      setOnTop(latestY === -780)
-    })
-    return unsubscribe
-  }, [y])
-
+export function FacilityDetailSheet({
+  facility,
+  onClose,
+}: {
+  facility: MapFacility
+  onClose: () => void
+}) {
   return (
-    <motion.div
-      drag={onTop ? false : "y"}
-      dragConstraints={{ bottom: -780, top: 0 }}
-      dragElastic={1}
-      style={{ y }}
-      className="absolute bottom-[-780px] z-[40] flex h-screen w-full flex-col gap-4 rounded-t-[16px] bg-white p-5 pt-9 shadow-[0_-18px_60px_-18px_rgba(13,12,10,0.4)]"
-    >
-      <SheetGrip />
-      {onTop && (
-        <button
-          type="button"
-          onClick={() => y.set(0)}
-          className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-black/[0.05] text-black/55"
-          aria-label="閉じる"
-        >
-          <X size={15} strokeWidth={1.5} />
-        </button>
-      )}
+    <MapBottomSheet onClose={onClose}>
       <div>
         <p
           className="text-[10px] tracking-[0.35em] text-black/40 uppercase"
@@ -163,6 +166,6 @@ export function FacilityDetailSheet({ facility }: { facility: MapFacility }) {
           </div>
         </DraggableContainer>
       )}
-    </motion.div>
+    </MapBottomSheet>
   )
 }

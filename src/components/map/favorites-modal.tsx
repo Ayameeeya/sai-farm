@@ -9,7 +9,7 @@ import type { MapProperty } from "@/types/map"
 
 type FavoritesStore = { properties: string[] }
 
-function readFavorites(): string[] {
+export function readFavorites(): string[] {
   try {
     const json = localStorage.getItem("favorites")
     if (!json) return []
@@ -19,7 +19,7 @@ function readFavorites(): string[] {
   }
 }
 
-function writeFavorites(ids: string[]) {
+export function writeFavorites(ids: string[]) {
   localStorage.setItem("favorites", JSON.stringify({ properties: ids }))
 }
 
