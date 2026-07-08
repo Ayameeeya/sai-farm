@@ -105,13 +105,17 @@ export function HeroSection({ latestProperty }: Props) {
           </div>
         </div>
 
-        {/* SP のみ — デザイン用 中央2行 */}
+        {/* SP のみ — デザイン用 左上はみ出し2行 */}
         <div
-          className="absolute inset-0 z-10 flex flex-col items-center justify-center lg:hidden"
-          style={{ pointerEvents: "none", lineHeight: 0.88 }}
+          className="absolute left-0 top-0 z-10 lg:hidden"
+          style={{
+            pointerEvents: "none",
+            transform: "translate(-6%, -4%)",
+            lineHeight: 0.88,
+          }}
         >
           <div
-            className="text-white"
+            className="text-white font-black"
             style={{
               fontFamily: "var(--font-display)",
               fontSize: "clamp(88px, 28vw, 140px)",
@@ -121,7 +125,7 @@ export function HeroSection({ latestProperty }: Props) {
             LIVE
           </div>
           <div
-            className="text-white"
+            className="text-white font-black"
             style={{
               fontFamily: "var(--font-display)",
               fontSize: "clamp(88px, 28vw, 140px)",
