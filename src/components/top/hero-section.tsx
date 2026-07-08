@@ -105,17 +105,20 @@ export function HeroSection({ latestProperty }: Props) {
           </div>
         </div>
 
-        {/* SP のみ — 左辺に沿って下から上へ縦書き */}
-        <div className="absolute bottom-0 left-0 top-0 z-10 flex items-center lg:hidden" style={{ pointerEvents: "none" }}>
+        {/* SP のみ — 左壁に半埋め縦書き */}
+        <div
+          className="absolute bottom-0 left-0 top-0 z-10 flex items-center lg:hidden"
+          style={{ pointerEvents: "none", transform: "translateX(-42%)" }}
+        >
           <span
-            className="text-white"
+            className="text-white/90"
             style={{
               writingMode: "vertical-rl",
               transform: "rotate(180deg)",
               fontFamily: "var(--font-display)",
-              fontSize: "clamp(28px, 7.5vw, 52px)",
-              letterSpacing: "0.06em",
-              textShadow: "0 2px 16px rgba(0,0,0,0.45)",
+              fontSize: "clamp(54px, 16vw, 88px)",
+              letterSpacing: "0.05em",
+              textShadow: "0 2px 24px rgba(0,0,0,0.3)",
             }}
           >
             LIVE NATURALLY.

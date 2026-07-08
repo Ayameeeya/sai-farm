@@ -170,7 +170,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
           <span className="text-[11px] lg:text-[12px] tracking-[0.25em] opacity-50 tabular-nums">
             {String(index + 1).padStart(2, '0')}
           </span>
-          <span className="font-serif font-light text-[clamp(24px,4.6vh,44px)] leading-none tracking-[0.04em]">
+          <span className="font-serif font-light text-[clamp(17px,4.5vw,44px)] leading-none tracking-[0.04em]">
             {text}
           </span>
         </span>
@@ -188,7 +188,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
         <div className="h-full w-fit flex" ref={marqueeInnerRef}>
           {[...Array(repetitions)].map((_, idx) => (
             <div className="marquee-part flex items-center flex-shrink-0" key={idx} style={{ color: marqueeTextColor }}>
-              <span className="whitespace-nowrap font-serif font-light text-[clamp(24px,4.6vh,44px)] tracking-[0.04em] leading-[1] px-[2vw]">
+              <span className="whitespace-nowrap font-serif font-light text-[clamp(17px,4.5vw,44px)] tracking-[0.04em] leading-[1] px-[2vw]">
                 {text}
               </span>
               <div
