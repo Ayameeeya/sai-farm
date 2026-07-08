@@ -68,7 +68,7 @@ export function PropertyCard({ property, index, variant = "default" }: Props) {
         />
 
         <div className="grid items-start gap-7 lg:grid-cols-[1.4fr_1fr] lg:gap-14">
-          <div className="relative aspect-[16/10] overflow-hidden rounded-[6px] bg-black/5">
+          <div className="relative aspect-[4/3] overflow-hidden rounded-[6px] bg-black/5 lg:aspect-[16/10]">
             {mainImage ? (
               <Image
                 src={mainImage}

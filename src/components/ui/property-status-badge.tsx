@@ -21,7 +21,7 @@ export function PropertyStatusBadge({ status, className }: Props) {
   return (
     <span
       className={cn(
-        "inline-flex items-center whitespace-nowrap rounded-full px-3.5 py-[6px] text-[10.5px] font-medium tracking-[0.18em] ring-1 backdrop-blur-md shadow-[0_4px_14px_-4px_rgba(13,12,10,0.35)]",
+        "inline-flex items-center whitespace-nowrap rounded-full px-2.5 py-[4px] text-[9px] font-medium tracking-[0.14em] ring-1 backdrop-blur-md shadow-[0_4px_14px_-4px_rgba(13,12,10,0.35)] lg:px-3.5 lg:py-[6px] lg:text-[10.5px] lg:tracking-[0.18em]",
         STATUS_STYLES[status] ?? "bg-[#e7e3da]/80 text-black/50 ring-white/40",
         className,
       )}
