@@ -8,10 +8,10 @@ type Props = {
 
 /** ステータス別配色 — モノトーン + 赤1色のグラスピル */
 const STATUS_STYLES: Record<number, string> = {
-  2: "bg-[#e8281a] text-white ring-white/20",         // 新着物件 — ビビッドレッド
-  3: "bg-white/85 text-black/70 ring-white/40",       // 価格変更 — ホワイトグラス
-  7: "bg-[#e7e3da]/80 text-black/50 ring-white/40",   // 商談中 — ウォームグレー
-  8: "bg-[#141311]/65 text-white/90 ring-white/15",   // ご成約 — スモークブラック
+  2: "bg-[#ff0000] text-white ring-white/20",                      // 新着物件 — 原色レッド
+  3: "bg-white/85 text-black/70 ring-white/40",                    // 価格変更 — ホワイトグラス
+  7: "bg-neutral-400/80 text-white ring-white/20",                 // 商談中 — ニュートラルグレー
+  8: "bg-[#141311]/65 text-white/90 ring-white/15",                // ご成約 — スモークブラック
 }
 
 export function PropertyStatusBadge({ status, className }: Props) {
