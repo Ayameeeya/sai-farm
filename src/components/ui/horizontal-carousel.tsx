@@ -6,6 +6,8 @@ type Props = {
   children: React.ReactNode[]
   gap?: number
   paddingX?: number
+  /** スマホ（640px未満）での横パディング。未指定時は paddingX を使用 */
+  mobilePaddingX?: number
   className?: string
   /** 暗い背景に置く場合 true */
   dark?: boolean
@@ -15,11 +17,22 @@ export function HorizontalCarousel({
   children,
   gap = 24,
   paddingX = 48,
+  mobilePaddingX,
   className = "",
   dark = false,
 }: Props) {
   const scrollRef = useRef<HTMLDivElement>(null)
   const [progress, setProgress] = useState(0)
+  const [effectivePx, setEffectivePx] = useState(paddingX)
+
+  useEffect(() => {
+    const update = () => {
+      setEffectivePx(window.innerWidth < 640 && mobilePaddingX != null ? mobilePaddingX : paddingX)
+    }
+    update()
+    window.addEventListener("resize", update)
+    return () => window.removeEventListener("resize", update)
+  }, [paddingX, mobilePaddingX])
 
   // drag-to-scroll
   const dragState = useRef({ down: false, startX: 0, startScroll: 0, moved: 0 })
@@ -90,8 +103,8 @@ export function HorizontalCarousel({
         className="flex overflow-x-auto select-none"
         style={{
           gap,
-          paddingLeft: paddingX,
-          paddingRight: paddingX,
+          paddingLeft: effectivePx,
+          paddingRight: effectivePx,
           cursor: dragging ? "grabbing" : "grab",
           WebkitOverflowScrolling: "touch",
           msOverflowStyle: "none",
@@ -108,7 +121,7 @@ export function HorizontalCarousel({
       {/* Progress bar */}
       <div
         className="mt-10 lg:mt-14 relative h-px"
-        style={{ marginLeft: paddingX, marginRight: paddingX, backgroundColor: trackColor }}
+        style={{ marginLeft: effectivePx, marginRight: effectivePx, backgroundColor: trackColor }}
       >
         <div
           className="absolute top-0 left-0 h-px transition-[width] duration-150 ease-out"

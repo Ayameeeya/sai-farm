@@ -43,7 +43,7 @@ export function ServicesSection({ services }: Props) {
       </motion.div>
 
       {/* Full-width carousel */}
-      <HorizontalCarousel gap={24} paddingX={INSET}>
+      <HorizontalCarousel gap={24} paddingX={INSET} mobilePaddingX={24}>
         {services.map((s, i) => {
           const text =
             s.description ??

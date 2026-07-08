@@ -115,7 +115,7 @@ export function HeroSection({ latestProperty }: Props) {
             style={{
               writingMode: "vertical-rl",
               fontFamily: "var(--font-display)",
-              fontSize: "clamp(72px, 22vw, 120px)",
+              fontSize: "clamp(96px, 30vw, 140px)",
               letterSpacing: "0.05em",
               textShadow: "0 2px 24px rgba(0,0,0,0.3)",
             }}
