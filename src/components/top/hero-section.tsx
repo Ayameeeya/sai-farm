@@ -105,31 +105,48 @@ export function HeroSection({ latestProperty }: Props) {
           </div>
         </div>
 
-        {/* SP のみ — デザイン用 左上はみ出し2行 */}
+        {/* SP のみ — デザイン用 左上はみ出し2行（塗り×アウトラインのミックス） */}
         <div
           className="absolute left-0 top-0 z-10 lg:hidden"
           style={{
             pointerEvents: "none",
-            transform: "translate(-6%, -4%)",
-            lineHeight: 0.88,
+            transform: "translate(-5%, -6%)",
+            lineHeight: 0.84,
           }}
         >
+          {/* LIVE — 白塗り、overlay で映像に溶ける */}
           <div
-            className="text-white font-black"
+            className="font-black text-white"
             style={{
               fontFamily: "var(--font-display)",
-              fontSize: "clamp(88px, 28vw, 140px)",
-              letterSpacing: "0.02em",
+              fontSize: "clamp(96px, 32vw, 150px)",
+              letterSpacing: "0.01em",
+              mixBlendMode: "overlay",
             }}
           >
             LIVE
           </div>
+          {/* 同じ文字を薄く重ねて視認性を担保 */}
           <div
-            className="text-white font-black"
+            aria-hidden
+            className="absolute left-0 top-0 font-black text-white/30"
             style={{
               fontFamily: "var(--font-display)",
-              fontSize: "clamp(88px, 28vw, 140px)",
-              letterSpacing: "0.02em",
+              fontSize: "clamp(96px, 32vw, 150px)",
+              letterSpacing: "0.01em",
+            }}
+          >
+            LIVE
+          </div>
+          {/* NATURALLY. — 塗りなし、白の縁取りだけで背景が透ける */}
+          <div
+            className="font-black"
+            style={{
+              fontFamily: "var(--font-display)",
+              fontSize: "clamp(96px, 32vw, 150px)",
+              letterSpacing: "0.01em",
+              color: "transparent",
+              WebkitTextStroke: "1.5px rgba(255,255,255,0.85)",
             }}
           >
             NATURALLY.
