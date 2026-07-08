@@ -114,39 +114,25 @@ export function HeroSection({ latestProperty }: Props) {
             lineHeight: 0.84,
           }}
         >
-          {/* LIVE — 白塗り、overlay で映像に溶ける */}
+          {/* difference で背景色を反転 */}
           <div
             className="font-black text-white"
             style={{
               fontFamily: "var(--font-display)",
               fontSize: "clamp(96px, 32vw, 150px)",
               letterSpacing: "0.01em",
-              mixBlendMode: "overlay",
+              mixBlendMode: "difference",
             }}
           >
             LIVE
           </div>
-          {/* 同じ文字を薄く重ねて視認性を担保 */}
           <div
-            aria-hidden
-            className="absolute left-0 top-0 font-black text-white/30"
+            className="font-black text-white"
             style={{
               fontFamily: "var(--font-display)",
               fontSize: "clamp(96px, 32vw, 150px)",
               letterSpacing: "0.01em",
-            }}
-          >
-            LIVE
-          </div>
-          {/* NATURALLY. — 塗りなし、白の縁取りだけで背景が透ける */}
-          <div
-            className="font-black"
-            style={{
-              fontFamily: "var(--font-display)",
-              fontSize: "clamp(96px, 32vw, 150px)",
-              letterSpacing: "0.01em",
-              color: "transparent",
-              WebkitTextStroke: "1.5px rgba(255,255,255,0.85)",
+              mixBlendMode: "difference",
             }}
           >
             NATURALLY.
