@@ -1,0 +1,110 @@
+/* ─── Leaflet ポップアップ: サイト共通のカードスタイル ─── */
+.leaflet-popup .leaflet-popup-content-wrapper {
+  border-radius: 12px;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  box-shadow: 0 18px 50px -12px rgba(13, 12, 10, 0.35);
+}
+
+.leaflet-popup .leaflet-popup-content-wrapper .leaflet-popup-content {
+  margin: 0;
+  width: auto !important;
+}
+
+.leaflet-popup .leaflet-popup-tip {
+  box-shadow: 0 4px 16px rgba(13, 12, 10, 0.16);
+}
+
+a.leaflet-popup-close-button {
+  top: 10px !important;
+  right: 10px !important;
+  width: 26px !important;
+  height: 26px !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background: rgba(13, 12, 10, 0.65) !important;
+  backdrop-filter: blur(4px);
+}
+
+a.leaflet-popup-close-button span {
+  color: #fff;
+  font-size: 16px;
+  line-height: 1;
+  padding: 0;
+}
+
+/* ─── 物件の価格ピン ─── */
+.price-pin-anchor {
+  background: none;
+  border: none;
+}
+
+.price-pin {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  transform: translate(-50%, 0);
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  background: #141311;
+  color: #fff;
+  font-family: var(--font-barlow), sans-serif;
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  padding: 5px 12px 6px;
+  border-radius: 9999px;
+  border: 1.5px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 8px 24px -6px rgba(13, 12, 10, 0.5);
+  cursor: pointer;
+  transition: transform 0.18s ease, background-color 0.18s ease, color 0.18s ease;
+}
+
+.price-pin::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -6px;
+  transform: translateX(-50%);
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 6px solid #141311;
+  transition: border-top-color 0.18s ease;
+}
+
+.price-pin:hover {
+  transform: translate(-50%, 0) scale(1.07);
+}
+
+.price-pin.is-selected {
+  background: #fff;
+  color: #141311;
+  border-color: #141311;
+}
+
+.price-pin.is-selected::after {
+  border-top-color: #fff;
+}
+
+/* ─── パネル内スクロールバー ─── */
+.map-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(13, 12, 10, 0.22) transparent;
+}
+
+.map-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.map-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.map-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(13, 12, 10, 0.22);
+  border-radius: 24px;
+}
