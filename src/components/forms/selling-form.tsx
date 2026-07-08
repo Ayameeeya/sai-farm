@@ -88,7 +88,18 @@ export function SellingForm() {
       const res = await fetch(FORMSPREE_URL, {
         method: "POST",
         headers: { Accept: "application/json", "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data, city: cityName, formType: "sales" }),
+        body: JSON.stringify({
+          "お名前": data.name,
+          "電話番号": data.tel,
+          "メールアドレス": data.email,
+          "物件の種類": data.kind,
+          "都道府県": data.prefecture,
+          "市区町村": cityName,
+          "住所": data.address,
+          "現在の状況": data.isLiving,
+          _subject: `【売却査定依頼】${data.name} 様より売却査定のご依頼が届きました`,
+          _replyto: data.email,
+        }),
       })
       const json = await res.json()
       if (json.ok) router.push("/thanks/")

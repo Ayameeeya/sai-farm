@@ -61,7 +61,14 @@ export function ContactForm() {
       const res = await fetch(FORMSPREE_URL, {
         method: "POST",
         headers: { Accept: "application/json", "Content-Type": "application/json" },
-        body: JSON.stringify(values),
+        body: JSON.stringify({
+          "お名前": values.name,
+          "電話番号": values.tel,
+          "メールアドレス": values.email ?? "（未入力）",
+          "お問い合わせ内容": values.message,
+          _subject: `【お問い合わせ】${values.name} 様よりお問い合わせが届きました`,
+          _replyto: values.email ?? "",
+        }),
       })
       const data = await res.json()
       if (data.ok) {
