@@ -42,7 +42,7 @@ export function ArticleCard({
           className,
         )}
       >
-        <div className="relative aspect-[16/10] w-full shrink-0 overflow-hidden rounded-b-[6px] bg-black/[0.04]">
+        <div className="relative aspect-[2/1] w-full shrink-0 overflow-hidden rounded-b-[6px] bg-black/[0.04] sm:aspect-[16/10]">
           {article.featured_photo_url ? (
             <Image
               src={article.featured_photo_url}
@@ -58,12 +58,12 @@ export function ArticleCard({
 
         <div
           className={cn(
-            "flex min-h-0 flex-1 flex-col px-4",
-            titleTier === "sm" ? "pb-2 pt-3" : "pb-3 pt-4",
+            "flex min-h-0 flex-1 flex-col px-3 sm:px-4",
+            titleTier === "sm" ? "pb-2 pt-2 sm:pt-3" : "pb-2 pt-3 sm:pb-3 sm:pt-4",
           )}
         >
           {article.category?.name && (
-            <p className="mb-2 text-[11px] tracking-[0.12em] text-black/40 uppercase">
+            <p className="mb-1.5 text-[11px] tracking-[0.12em] text-black/40 uppercase sm:mb-2">
               {article.category.name}
             </p>
           )}
@@ -77,7 +77,7 @@ export function ArticleCard({
             {article.title}
           </h2>
 
-          <div className="mt-3 flex items-end justify-between gap-3">
+          <div className="mt-2 flex items-end justify-between gap-3 sm:mt-3">
             <time className="text-[13px] tabular-nums text-black/45">
               {format(new Date(article.created_at), "yyyy年M月d日", { locale: ja })}
             </time>
