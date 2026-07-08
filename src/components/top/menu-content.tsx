@@ -54,7 +54,7 @@ export function MenuContent({ onClose }: { onClose: () => void }) {
       {/* ドロワーパネル */}
       <motion.div
         className="fixed inset-y-3 right-3 z-[75] flex flex-col overflow-hidden rounded-[10px] bg-[#0a0a0a] text-white"
-        style={{ width: "min(420px, calc(100vw - 24px))" }}
+        style={{ width: "min(420px, calc(100vw - 72px))" }}
         variants={panelVariants}
         initial="hidden"
         animate="visible"
@@ -101,7 +101,7 @@ export function MenuContent({ onClose }: { onClose: () => void }) {
                   {link.label}
                 </span>
                 <span
-                  className="ml-auto text-[10px] tracking-[0.28em] text-white/25 transition-colors duration-300 group-hover:text-white/55"
+                  className="ml-auto hidden text-[10px] tracking-[0.28em] text-white/25 transition-colors duration-300 group-hover:text-white/55 sm:block"
                   style={{ fontFamily: "var(--font-display)" }}
                 >
                   {link.en}
