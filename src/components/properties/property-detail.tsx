@@ -4,7 +4,8 @@ import { useState, useRef } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import dynamic from "next/dynamic"
-import { Heart, MapPin, Phone, ChevronLeft, ChevronRight, BedDouble, Bath, Maximize2, Home } from "lucide-react"
+import { AnimatePresence, motion } from "framer-motion"
+import { Heart, MapPin, Phone, ChevronLeft, ChevronRight, BedDouble, Bath, Maximize2, Home, X } from "lucide-react"
 import { LetterSwapButton } from "@/components/ui/letter-swap-button"
 import { PropertyStatusBadge } from "@/components/ui/property-status-badge"
 import { SCROLL_PAGE_PT, STICKY_TOP } from "@/components/top/top-page-nav"
@@ -75,19 +76,36 @@ export function PropertyDetail({ property, related, companyName, tel = "0558-64-
     (a, b) => a.sort_order - b.sort_order,
   )
   const [currentImg, setCurrentImg] = useState(0)
+  const [modalOpen, setModalOpen] = useState(false)
   const touchStartX = useRef<number | null>(null)
+  const touchMoved = useRef(false)
 
   const prev = () => setCurrentImg((i) => (i === 0 ? images.length - 1 : i - 1))
   const next = () => setCurrentImg((i) => (i === images.length - 1 ? 0 : i + 1))
 
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX
+    touchMoved.current = false
+  }
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (touchStartX.current !== null && Math.abs(e.touches[0].clientX - touchStartX.current) > 8) {
+      touchMoved.current = true
+    }
   }
   const handleTouchEnd = (e: React.TouchEvent) => {
     if (touchStartX.current === null) return
     const delta = e.changedTouches[0].clientX - touchStartX.current
     if (Math.abs(delta) > 40) delta < 0 ? next() : prev()
     touchStartX.current = null
+  }
+  const handleImageClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (touchMoved.current) { touchMoved.current = false; return }
+    if (images.length <= 1) { setModalOpen(true); return }
+    const rect = e.currentTarget.getBoundingClientRect()
+    const ratio = (e.clientX - rect.left) / rect.width
+    if (ratio < 0.25) prev()
+    else if (ratio > 0.75) next()
+    else setModalOpen(true)
   }
 
   const tags = (property as Property & { property_tags?: { tag?: { name: string } }[] }).property_tags?.map((pt) => pt.tag?.name).filter(Boolean) ?? []
@@ -195,8 +213,10 @@ export function PropertyDetail({ property, related, companyName, tel = "0558-64-
             {/* ギャラリー */}
             <div>
               <div
-                className="group relative aspect-[16/10] overflow-hidden rounded-[6px] bg-black/5"
+                className="group relative aspect-[16/10] overflow-hidden rounded-[6px] bg-black/5 cursor-pointer"
+                onClick={images.length > 0 ? handleImageClick : undefined}
                 onTouchStart={images.length > 1 ? handleTouchStart : undefined}
+                onTouchMove={images.length > 1 ? handleTouchMove : undefined}
                 onTouchEnd={images.length > 1 ? handleTouchEnd : undefined}
               >
                 {images.length > 0 ? (
@@ -483,6 +503,83 @@ export function PropertyDetail({ property, related, companyName, tel = "0558-64-
           </div>
         )}
       </div>
+
+      {/* ライトボックスモーダル */}
+      <AnimatePresence>
+        {modalOpen && images[currentImg] && (
+          <motion.div
+            className="fixed inset-0 z-[200] flex items-center justify-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.22 }}
+            onClick={() => setModalOpen(false)}
+          >
+            {/* バックドロップ */}
+            <div className="absolute inset-0 bg-black/88 backdrop-blur-sm" />
+
+            {/* 閉じるボタン */}
+            <button
+              type="button"
+              aria-label="閉じる"
+              className="absolute top-4 right-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-md transition-colors hover:bg-white/25"
+              onClick={() => setModalOpen(false)}
+            >
+              <X size={18} />
+            </button>
+
+            {/* 画像 */}
+            <motion.div
+              className="relative z-10 max-h-[88svh] w-full max-w-[92vw] lg:max-w-4xl"
+              initial={{ scale: 0.92, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.92, opacity: 0 }}
+              transition={{ duration: 0.24, ease: [0.25, 0.46, 0.45, 0.94] }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[10px] lg:aspect-[16/10]">
+                <Image
+                  src={images[currentImg].image_url}
+                  alt={property.property_name}
+                  fill
+                  className="object-contain"
+                  sizes="92vw"
+                />
+              </div>
+              {images.length > 1 && (
+                <p
+                  className="mt-3 text-center text-[11px] tabular-nums tracking-[0.15em] text-white/45"
+                  style={{ fontFamily: "var(--font-barlow)" }}
+                >
+                  {currentImg + 1} / {images.length}
+                </p>
+              )}
+            </motion.div>
+
+            {/* モーダル内でも左右スワイプ・端タップ */}
+            {images.length > 1 && (
+              <>
+                <button
+                  type="button"
+                  aria-label="前の画像"
+                  className="absolute left-3 top-1/2 z-10 -translate-y-1/2 flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-md transition-colors hover:bg-white/25 lg:left-6"
+                  onClick={(e) => { e.stopPropagation(); prev() }}
+                >
+                  <ChevronLeft size={20} />
+                </button>
+                <button
+                  type="button"
+                  aria-label="次の画像"
+                  className="absolute right-3 top-1/2 z-10 -translate-y-1/2 flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-md transition-colors hover:bg-white/25 lg:right-6"
+                  onClick={(e) => { e.stopPropagation(); next() }}
+                >
+                  <ChevronRight size={20} />
+                </button>
+              </>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </article>
   )
 }
