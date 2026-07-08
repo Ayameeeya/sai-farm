@@ -23,8 +23,7 @@ export function ServicesSection({ services }: Props) {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8 }}
-        className="mb-14 lg:mb-24 flex items-end justify-between"
-        style={{ paddingLeft: INSET, paddingRight: INSET }}
+        className="mb-14 lg:mb-24 flex items-end justify-between px-6 lg:px-20"
       >
         <div>
           <p
