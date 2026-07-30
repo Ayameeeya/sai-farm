@@ -4,3 +4,9 @@
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
+
+# ヒーロー動画・ポスターを長めにキャッシュ（ファイル差し替え時はファイル名を変える）
+[[headers]]
+  for = "/movies/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

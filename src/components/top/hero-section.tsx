@@ -7,6 +7,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { ArrowUpRightFromSquare } from "lucide-react"
 import { BAR_H } from "@/components/top/top-page-nav"
+import { ResponsiveBackgroundVideo } from "@/components/ui/responsive-background-video"
 
 type LatestProperty = {
   id: string
@@ -61,14 +62,12 @@ export function HeroSection({ latestProperty }: Props) {
           }}
         />
 
-        {/* 背景動画 */}
-        <video
-          muted
-          autoPlay
-          loop
-          playsInline
-          className="absolute inset-0 h-full w-full object-cover"
+        {/* 背景動画 — poster即時表示 + SPは軽量版 */}
+        <ResponsiveBackgroundVideo
+          priority
           src="/movies/top.mp4"
+          mobileSrc="/movies/top-mobile.mp4"
+          poster="/movies/top-poster.jpg"
         />
 
         {/* 大見出し — PC: 左下横書き / SP: 左端縦書き（回転） */}
@@ -154,6 +153,7 @@ export function HeroSection({ latestProperty }: Props) {
                       fill
                       className="object-cover transition-all duration-[1500ms] ease-out group-hover:scale-[1.08] group-hover:translate-x-[-2%] group-hover:translate-y-[-2%]"
                       sizes="250px"
+                      priority
                     />
                   ) : (
                     <div className="w-full h-full bg-white/10" />

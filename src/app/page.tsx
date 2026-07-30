@@ -51,6 +51,8 @@ export default async function TopPage() {
 
   return (
     <>
+      {/* ヒーロー poster を最優先で先読み（動画が来る前に画面を埋める） */}
+      <link rel="preload" as="image" href="/movies/top-poster.jpg" fetchPriority="high" />
       <TopPageNav />
       {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
       <HeroSection latestProperty={latestProperty as any ?? undefined} />

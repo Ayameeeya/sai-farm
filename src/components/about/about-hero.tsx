@@ -5,12 +5,9 @@ import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { Fog } from "@/components/ui/fog"
 import { CharReveal } from "@/components/about/char-reveal"
-import { MEDIA } from "@/lib/media"
+import { ResponsiveBackgroundVideo } from "@/components/ui/responsive-background-video"
 
 gsap.registerPlugin(ScrollTrigger)
-
-const HERO_VIDEO = MEDIA.IMG_E1859_MP4
-const HERO_POSTER = MEDIA.IMG_1850
 
 const HEADING_LINES = ["自然と、", "共に暮らす。"]
 
@@ -130,16 +127,12 @@ export function AboutHero() {
       {/* 背景: 原生林の写真。グラデとスクロール暗転で完全な黒へ溶ける */}
       <div ref={bgRef} className="absolute inset-x-0 top-0 h-[185svh] min-h-[1100px]">
         <div ref={imageRef} className="absolute inset-0 will-change-transform">
-          <video
-            muted
-            autoPlay
-            loop
-            playsInline
-            preload="auto"
-            poster={HERO_POSTER}
-            aria-hidden
-            className="absolute inset-0 h-full w-full object-cover object-center saturate-[0.8]"
-            src={HERO_VIDEO}
+          <ResponsiveBackgroundVideo
+            priority
+            src="/movies/about-hero.mp4"
+            mobileSrc="/movies/about-hero-mobile.mp4"
+            poster="/movies/about-hero-poster.jpg"
+            className="saturate-[0.8]"
           />
         </div>
 

@@ -176,11 +176,12 @@ export function IntroSection() {
       >
         <div ref={imageInnerRef} className="absolute -inset-y-[10%] inset-x-0">
           <Image
-            src="https://images.unsplash.com/photo-1504851149312-7a075b496cc7?w=2400&q=90"
+            src="https://images.unsplash.com/photo-1504851149312-7a075b496cc7?w=1600&q=75"
             alt="伊豆半島の星空"
             fill
             className="object-cover object-center"
             sizes="100vw"
+            quality={75}
           />
         </div>
 
