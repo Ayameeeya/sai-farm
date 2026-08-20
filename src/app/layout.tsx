@@ -8,6 +8,7 @@ import { SmoothScroll } from "@/components/layout/smooth-scroll"
 import { SITE_URL } from "@/lib/site"
 
 const GA_ID = "G-3LWDF8E1X3"
+const ADSENSE_CLIENT = "ca-pub-9390559827238854"
 
 const notoSansJP = Noto_Sans_JP({
   subsets: ["latin"],
@@ -69,6 +70,9 @@ export const metadata: Metadata = {
       { url: "/icon-512.png", sizes: "512x512" },
     ],
     apple: "/apple-touch-icon.png",
+  },
+  other: {
+    "google-adsense-account": ADSENSE_CLIENT,
   },
 }
 

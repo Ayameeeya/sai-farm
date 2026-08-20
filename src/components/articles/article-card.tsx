@@ -59,7 +59,9 @@ export function ArticleCard({
         <div
           className={cn(
             "flex min-h-0 flex-1 flex-col px-3 sm:px-4",
-            titleTier === "sm" ? "pb-2 pt-2 sm:pt-3" : "pb-2 pt-3 sm:pb-3 sm:pt-4",
+            titleTier === "sm"
+              ? "pb-4 pt-2 sm:pb-5 sm:pt-3"
+              : "pb-4 pt-3 sm:pb-5 sm:pt-4",
           )}
         >
           {article.category?.name && (

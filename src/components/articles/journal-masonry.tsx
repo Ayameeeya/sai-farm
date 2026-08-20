@@ -3,7 +3,7 @@
 import { useMemo } from "react"
 import { ArticleCard, type ArticleCardData } from "@/components/articles/article-card"
 import { Masonry } from "@/components/ui/masonry"
-import { estimateArticleCardHeight, getTitleClassName, getTitleLineCount, getTitleTier } from "@/lib/article-card-height"
+import { estimateArticleCardHeight, getTitleLineCount, getTitleTier } from "@/lib/article-card-height"
 
 type Props = {
   articles: ArticleCardData[]
@@ -11,7 +11,7 @@ type Props = {
 }
 
 type MasonryArticle = ArticleCardData & {
-  height: (columnWidth: number) => number
+  height: (columnWidth: number, columnCount: number) => number
 }
 
 export function JournalMasonry({ articles }: Props) {
@@ -19,7 +19,8 @@ export function JournalMasonry({ articles }: Props) {
     () =>
       articles.map((article) => ({
         ...article,
-        height: (columnWidth: number) => estimateArticleCardHeight(article, columnWidth),
+        height: (columnWidth: number, columnCount: number) =>
+          estimateArticleCardHeight(article, columnWidth, columnCount),
       })),
     [articles],
   )

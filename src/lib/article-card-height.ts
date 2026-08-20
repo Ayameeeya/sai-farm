@@ -6,31 +6,26 @@ export type TitleTier = "sm" | "md" | "lg"
 export const LANDSCAPE_IMAGE_RATIO = 10 / 16
 const LANDSCAPE_IMAGE_RATIO_MOBILE = 1 / 2
 
-export function landscapeImageHeight(columnWidth: number): number {
-  const ratio = isMobileColumn(columnWidth) ? LANDSCAPE_IMAGE_RATIO_MOBILE : LANDSCAPE_IMAGE_RATIO
+export function landscapeImageHeight(
+  columnWidth: number,
+  isSingleColumn: boolean,
+): number {
+  const ratio = isSingleColumn
+    ? LANDSCAPE_IMAGE_RATIO_MOBILE
+    : LANDSCAPE_IMAGE_RATIO
   return columnWidth * ratio
 }
 
-/** 16px 明朝・列幅から1行に収まる文字数 */
+/** 明朝体の表示幅を考慮した、1行に収まる概算文字数 */
 function charsPerLine(columnWidth: number): number {
   const innerWidth = Math.max(columnWidth - 32, 120)
-  return Math.max(14, Math.floor(innerWidth / 16))
+  return Math.max(12, Math.floor(innerWidth / 18))
 }
 
-function isMobileColumn(columnWidth: number): boolean {
-  return columnWidth < 640
-}
-
-/**
- * タイトル行数 — 実際の折り返しに近い判定
- * スマホ（1列）は最大2行で高さを抑える
- */
+/** タイトル行数 — カード内で全文を表示できるよう余裕を持って算出 */
 export function getTitleLineCount(title: string, columnWidth: number): number {
   const cpl = charsPerLine(columnWidth)
-  let lines = 1
-  if (title.length > cpl) lines = title.length > 30 ? 3 : 2
-  if (isMobileColumn(columnWidth)) return Math.min(lines, 2)
-  return lines
+  return Math.max(1, Math.ceil(Array.from(title).length / cpl))
 }
 
 export function getTitleTier(title: string, columnWidth: number): TitleTier {
@@ -42,54 +37,41 @@ export function getTitleTier(title: string, columnWidth: number): TitleTier {
 
 /** スマホ用タイトル領域の高さ（px） */
 function titleBlockHeightMobile(lineCount: number): number {
-  const lines = Math.min(lineCount, 2)
-  switch (lines) {
-    case 1:
-      return 24
-    case 2:
-      return 48
-    default:
-      return 48
-  }
+  if (lineCount === 1) return 24
+  if (lineCount === 2) return 52
+  return lineCount * 29
 }
 
-/** デスクトップ用 — マソンリーのリズム用に余白を多めに確保 */
-function titleBlockHeightDesktop(lineCount: number): number {
-  switch (Math.min(lineCount, 4)) {
-    case 1:
-      return 18
-    case 2:
-      return 64
-    case 3:
-      return 224
-    default:
-      return 264
-  }
-}
+const TEXT_CHROME_MOBILE = 10 + 16 + 28
 
-const TEXT_CHROME = 16 + 12 + 36 // pt-4 + pb-3 + meta row
-const TEXT_CHROME_COMPACT = 12 + 8 + 32 // 1行用
-const TEXT_CHROME_MOBILE = 10 + 8 + 28
-
-function textSectionHeight(lineCount: number, categoryH: number, columnWidth: number): number {
-  if (isMobileColumn(columnWidth)) {
-    return TEXT_CHROME_MOBILE + categoryH + titleBlockHeightMobile(lineCount)
-  }
-
-  const chrome = lineCount <= 1 ? TEXT_CHROME_COMPACT : TEXT_CHROME
-  const base = chrome + categoryH + titleBlockHeightDesktop(lineCount)
-  if (lineCount >= 3) return base + 60
-  return base
+function textSectionHeight(
+  lineCount: number,
+  categoryH: number,
+  isSingleColumn: boolean,
+): number {
+  const desktopLineHeightAdjustment = isSingleColumn ? 0 : 18
+  return (
+    TEXT_CHROME_MOBILE +
+    categoryH +
+    titleBlockHeightMobile(lineCount) +
+    desktopLineHeightAdjustment
+  )
 }
 
 /** 横長画像（固定比率）+ テキスト可変 = カード全体 */
 export function estimateArticleCardHeight(
   article: ArticleCardData,
   columnWidth: number,
+  columnCount: number,
 ): number {
   const lines = getTitleLineCount(article.title, columnWidth)
   const categoryH = article.category?.name ? 22 : 0
-  return landscapeImageHeight(columnWidth) + textSectionHeight(lines, categoryH, columnWidth)
+  const isSingleColumn = columnCount === 1
+
+  return (
+    landscapeImageHeight(columnWidth, isSingleColumn) +
+    textSectionHeight(lines, categoryH, isSingleColumn)
+  )
 }
 
 export function getTitleClassName(tier: TitleTier, lineCount: number): string {
@@ -109,5 +91,5 @@ export function getTitleClassName(tier: TitleTier, lineCount: number): string {
     4: "min-h-[6.2em] max-sm:min-h-[3.1em]",
   }
 
-  return `${size} ${minHMap[lines] ?? minHMap[4]} leading-[1.55] line-clamp-2 sm:line-clamp-none`
+  return `${size} ${minHMap[lines] ?? minHMap[4]} leading-[1.55]`
 }

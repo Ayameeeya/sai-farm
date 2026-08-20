@@ -48,7 +48,7 @@ const useMeasure = () => {
 
 export type MasonryItem = {
   id: string
-  height: number | ((columnWidth: number) => number)
+  height: number | ((columnWidth: number, columnCount: number) => number)
 }
 
 type GridItem = MasonryItem & {
@@ -105,7 +105,9 @@ export function Masonry<T extends MasonryItem>({
       const col = colHeights.indexOf(Math.min(...colHeights))
       const x = col * (columnWidth + gap)
       const h =
-        typeof child.height === "function" ? child.height(columnWidth) : child.height
+        typeof child.height === "function"
+          ? child.height(columnWidth, columnCount)
+          : child.height
       const y = colHeights[col]
 
       colHeights[col] += h + gap
