@@ -94,7 +94,26 @@ export function FooterMain() {
       </div>
 
       <div className="px-6 lg:px-12 py-[18px] flex flex-wrap items-center gap-x-8 gap-y-3 lg:justify-between lg:gap-x-10 font-mono text-[10px] tracking-[0.12em] text-white uppercase">
-        <span className="order-last w-full pt-3 lg:order-0 lg:w-auto lg:pt-0">© 2026 Saifarm Minami-izu co.,ltd.</span>
+        <div className="order-last flex w-full items-center justify-between gap-6 pt-3 lg:order-0 lg:w-auto lg:pt-0 lg:gap-10">
+          <span>© 2026 Saifarm Minami-izu co.,ltd.</span>
+          <a
+            href="https://www.tentspace.net/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="サイト制作: tent space"
+            title="Site by tent space"
+            className="inline-flex items-center gap-2 text-white hover:opacity-60 transition-opacity duration-300"
+          >
+            <span className="tracking-[0.18em] normal-case">site by</span>
+            <Image
+              src="/common/logo_white_symbol.png"
+              alt=""
+              width={273}
+              height={183}
+              className="h-[18px] w-auto"
+            />
+          </a>
+        </div>
         <Link href="/company/" prefetch={false} className="hover:opacity-60 transition-opacity duration-300">
           会社情報
         </Link>

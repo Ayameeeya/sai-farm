@@ -9,11 +9,10 @@ import { Ferrofluid } from "@/components/ui/ferrofluid"
 import { LightRays } from "@/components/ui/light-rays"
 import { LetterSwapButton } from "@/components/ui/letter-swap-button"
 import { CharReveal } from "@/components/about/char-reveal"
-import { MEDIA } from "@/lib/media"
 
 gsap.registerPlugin(ScrollTrigger)
 
-const PROMISE_IMAGE = MEDIA.IMG_1842
+const PROMISE_IMAGE = "/images/about/promise.jpg"
 
 const INTRO_PARAGRAPHS = [
   "私たちサイファームは、伊豆半島の最南端、南伊豆高原に拠点を置く不動産会社です。",
@@ -49,7 +48,6 @@ export type AboutStoryImages = {
   ocean: string
   forest: string
   green: string
-  life: string
 }
 
 export function AboutStory({ images }: { images: AboutStoryImages }) {
@@ -283,6 +281,7 @@ export function AboutStory({ images }: { images: AboutStoryImages }) {
               fill
               className={`object-cover object-center ${ch.imageClass}`}
               sizes="100vw"
+              quality={72}
             />
           </div>
 
@@ -406,6 +405,7 @@ export function AboutStory({ images }: { images: AboutStoryImages }) {
             fill
             className="object-cover object-center brightness-[0.85] saturate-[0.9]"
             sizes="100vw"
+            quality={72}
           />
           <div
             className="pointer-events-none absolute inset-0"

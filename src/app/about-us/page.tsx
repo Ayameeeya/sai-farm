@@ -1,7 +1,6 @@
 import type { Metadata } from "next"
 import { AboutHero } from "@/components/about/about-hero"
 import { AboutStory } from "@/components/about/about-story"
-import { MEDIA } from "@/lib/media"
 
 export const metadata: Metadata = {
   title: "私たちについて",
@@ -11,13 +10,19 @@ export const metadata: Metadata = {
 export default function AboutUsPage() {
   return (
     <main>
+      {/* 動画の読み込み中もファーストビューを即座に表示する */}
+      <link
+        rel="preload"
+        as="image"
+        href="/movies/about-hero-poster.jpg"
+        fetchPriority="high"
+      />
       <AboutHero />
       <AboutStory
         images={{
-          ocean: MEDIA.IMG_CHOJAGAHARA,
-          forest: MEDIA.IMG_1874,
-          green: MEDIA.IMG_1710,
-          life: MEDIA.IMG_1834,
+          ocean: "/images/about/ocean.jpg",
+          forest: "/images/about/forest.jpg",
+          green: "/images/about/geopark.jpg",
         }}
       />
     </main>

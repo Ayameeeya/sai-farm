@@ -13,7 +13,7 @@ gsap.registerPlugin(ScrollTrigger)
 
 const CTA_IMAGE = MEDIA.IMG_1721
 const BOTTOM_IMAGE = MEDIA.IMG_CHOJAGAHARA
-const ABOUT_BOTTOM_IMAGE = MEDIA.P1010417
+const ABOUT_BOTTOM_IMAGE = "/images/about/footer.jpg"
 const FOOTER_IMAGE_PLACEHOLDER =
   "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='10'%3E%3Crect width='16' height='10' fill='%23282724'/%3E%3C/svg%3E" as const
 
