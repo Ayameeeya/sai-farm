@@ -13,6 +13,9 @@ export const metadata: Metadata = {
   title: "サイファーム南伊豆 | 伊豆の不動産・移住・別荘",
 }
 
+export const dynamic = "force-static"
+export const revalidate = 300
+
 export default async function TopPage() {
   const supabase = await createClient()
 

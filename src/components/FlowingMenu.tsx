@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { gsap } from 'gsap';
+import Image from 'next/image';
 
 interface MenuItemData {
   link: string;
@@ -191,10 +192,16 @@ const MenuItem: React.FC<MenuItemProps> = ({
               <span className="whitespace-nowrap font-serif font-light text-[clamp(22px,5.2vw,44px)] tracking-[0.04em] leading-[1] px-[2vw]">
                 {text}
               </span>
-              <div
-                className="w-[260px] h-[86%] mx-[2vw] bg-cover bg-center"
-                style={{ backgroundImage: `url(${image})` }}
-              />
+              <div className="relative w-[260px] h-[86%] mx-[2vw] overflow-hidden">
+                <Image
+                  src={image}
+                  alt=""
+                  fill
+                  sizes="260px"
+                  quality={90}
+                  className="object-cover object-center"
+                />
+              </div>
             </div>
           ))}
         </div>

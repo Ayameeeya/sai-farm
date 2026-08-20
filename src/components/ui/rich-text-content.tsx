@@ -1,5 +1,6 @@
 import Link from "next/link"
 import Image from "next/image"
+import { ArticleContactBanner } from "@/components/articles/article-contact-banner"
 
 type RichNode = {
   nodeType?: string
@@ -36,6 +37,11 @@ function extractEmbedHtml(node: RichNode): string | null {
   return embed?.value ?? null
 }
 
+function extractPlainText(node: RichNode): string {
+  if (node.nodeType === "text") return node.value ?? ""
+  return node.content?.map(extractPlainText).join("") ?? ""
+}
+
 function renderNode(node: RichNode, key: number): React.ReactNode {
   const children = node.content?.map((child, i) => renderNode(child, i))
 
@@ -43,6 +49,10 @@ function renderNode(node: RichNode, key: number): React.ReactNode {
     case "document":
       return <div className="space-y-5">{children}</div>
     case "paragraph": {
+      if (extractPlainText(node).trim().toLowerCase() === "[sai-farm]") {
+        return <ArticleContactBanner key={key} />
+      }
+
       const embedHtml = extractEmbedHtml(node)
       if (embedHtml) {
         return (

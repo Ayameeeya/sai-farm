@@ -4,6 +4,12 @@ import { motion } from "framer-motion"
 import FlowingMenu from "@/components/FlowingMenu"
 import { MEDIA } from "@/lib/media"
 
+const BUY_HOUSE_IMAGE =
+  "https://images.unsplash.com/photo-1700049378269-a1dae6a3cd89?auto=format&fit=crop&w=1200&q=86"
+
+const SELL_PROPERTY_IMAGE =
+  "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=1200&q=86"
+
 const PURPOSES = [
   {
     text: "土地を買う",
@@ -15,7 +21,7 @@ const PURPOSES = [
     text: "住まいを買う",
     en: "Buy House",
     link: "/properties/property-categories/house/",
-    image: MEDIA.HOUSE_2654738,
+    image: BUY_HOUSE_IMAGE,
   },
   {
     text: "エリアから探す",
@@ -27,7 +33,7 @@ const PURPOSES = [
     text: "不動産の売却",
     en: "Sell Property",
     link: "/sales/",
-    image: MEDIA.IMG_1729,
+    image: SELL_PROPERTY_IMAGE,
   },
 ]
 

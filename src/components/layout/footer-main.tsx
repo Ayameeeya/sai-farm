@@ -26,7 +26,7 @@ export function FooterMain() {
     <>
       <div className="px-6 lg:px-12 pt-10 lg:pt-12 pb-20 lg:pb-24 grid lg:grid-cols-2 gap-y-16">
         <div className="flex flex-col justify-between gap-16 lg:pr-24">
-          <Link href="/" className="inline-block no-underline text-inherit">
+          <Link href="/" prefetch={false} className="inline-block no-underline text-inherit">
             <Image
               src="/common/logo-white.png"
               alt="SAIFARM MINAMI-IZU"
@@ -67,6 +67,7 @@ export function FooterMain() {
                 <li key={item.href} className="border-b border-white/[0.22]">
                   <Link
                     href={item.href}
+                    prefetch={false}
                     className="block py-[7px] text-[17px] lg:text-[19px] font-medium tracking-[0.01em] text-white hover:opacity-60 transition-opacity duration-300"
                   >
                     {item.label}
@@ -81,6 +82,7 @@ export function FooterMain() {
               <li key={link.href}>
                 <Link
                   href={link.href}
+                  prefetch={false}
                   className="text-[12px] text-white hover:opacity-60 transition-opacity duration-300"
                 >
                   {link.label}
@@ -93,22 +95,23 @@ export function FooterMain() {
 
       <div className="px-6 lg:px-12 py-[18px] flex flex-wrap items-center gap-x-8 gap-y-3 lg:justify-between lg:gap-x-10 font-mono text-[10px] tracking-[0.12em] text-white uppercase">
         <span className="order-last w-full pt-3 lg:order-0 lg:w-auto lg:pt-0">© 2026 Saifarm Minami-izu co.,ltd.</span>
-        <Link href="/company/" className="hover:opacity-60 transition-opacity duration-300">
+        <Link href="/company/" prefetch={false} className="hover:opacity-60 transition-opacity duration-300">
           会社情報
         </Link>
-        <Link href="/privacy-policy/" className="hover:opacity-60 transition-opacity duration-300">
+        <Link href="/privacy-policy/" prefetch={false} className="hover:opacity-60 transition-opacity duration-300">
           プライバシーポリシー
         </Link>
-        <Link href="/articles/" className="hover:opacity-60 transition-opacity duration-300">
+        <Link href="/articles/" prefetch={false} className="hover:opacity-60 transition-opacity duration-300">
           ブログ記事
         </Link>
         <Link
           href="/tools/properties-tax-simulator/"
+          prefetch={false}
           className="hover:opacity-60 transition-opacity duration-300"
         >
           税金シミュレーター
         </Link>
-        <Link href="/contact/" className="hover:opacity-60 transition-opacity duration-300">
+        <Link href="/contact/" prefetch={false} className="hover:opacity-60 transition-opacity duration-300">
           お問い合わせ
         </Link>
       </div>

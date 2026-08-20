@@ -14,6 +14,8 @@ gsap.registerPlugin(ScrollTrigger)
 const CTA_IMAGE = MEDIA.IMG_1721
 const BOTTOM_IMAGE = MEDIA.IMG_CHOJAGAHARA
 const ABOUT_BOTTOM_IMAGE = MEDIA.P1010417
+const FOOTER_IMAGE_PLACEHOLDER =
+  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='10'%3E%3Crect width='16' height='10' fill='%23282724'/%3E%3C/svg%3E" as const
 
 export function Footer() {
   const pathname = usePathname()
@@ -21,8 +23,6 @@ export function Footer() {
   const isAbout = pathname === "/about-us/"
   const isMap = pathname === "/map/"
   const showReveal = isTop || isAbout
-
-  if (isMap || pathname.startsWith("/admin")) return null
 
   const rootRef = useRef<HTMLElement>(null)
   const ctaHeadingRef = useRef<HTMLHeadingElement>(null)
@@ -81,6 +81,8 @@ export function Footer() {
     return () => ctx.revert()
   }, [isTop, showReveal])
 
+  if (isMap || pathname.startsWith("/admin")) return null
+
   // カーテンリベール（一番下の画像）
   const curtainReveal = (
     <div
@@ -99,6 +101,7 @@ export function Footer() {
             fill
             className="object-cover object-center"
             sizes="100vw"
+            placeholder={FOOTER_IMAGE_PLACEHOLDER}
           />
         </div>
         <div className="absolute inset-0 bg-black/15" />
@@ -153,6 +156,7 @@ export function Footer() {
             fill
             className="object-cover object-center"
             sizes="100vw"
+            placeholder={FOOTER_IMAGE_PLACEHOLDER}
           />
           <div className="absolute inset-0 bg-black/55" />
           <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-transparent to-transparent" />
